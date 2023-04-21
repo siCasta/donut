@@ -1,9 +1,6 @@
-import {
-    brightCyan,
-    brightYellow,
-    rgb24
-} from 'https://deno.land/std@0.182.0/fmt/colors.ts'
-import { graphics } from './a.ts'
+import { brightYellow } from 'https://deno.land/std@0.182.0/fmt/colors.ts'
+import { sleep } from './funcs.ts'
+import { graphics } from './settings.ts'
 
 let a = 0
 let b = 0
@@ -11,13 +8,14 @@ const height = 24
 const width = 80
 
 console.clear()
+console.log('\u001B[?25l')
 
 while (true) {
     const z = []
     const screen = []
 
     for (let i = 0; i < width * height; i++) {
-        screen[i] = i % width === 79 ? '\n' : ' '
+        screen[i] = i % width === 0 ? '\n' : ' '
         z[i] = 0
     }
 
@@ -51,23 +49,22 @@ while (true) {
             )
 
             if (0 <= y && y < height && 0 <= x && x < width && z[o] < d) {
-                console.log(graphics)
                 z[o] = d
-                screen[o] = graphics[N > 0 ? N : 0]
+                screen[o] = graphics.split(' ')[N >= 0 ? N : 0]
             }
         }
     }
 
-    await new Promise(resolve => setTimeout(resolve, 0.012 * 1000))
-
+    await sleep(0.012)
     console.clear()
 
-    const foot = brightYellow('By siCasta')
-    const encode = new TextEncoder().encode(
-        `${brightCyan(screen.join(''))}\n${foot}`
-    )
+    const header =
+        Array(Math.floor(width / 2) - 5)
+            .fill(' ')
+            .join('') + brightYellow('By siCasta')
 
-    await Deno.stdout.write(encode)
+    console.log('\n' + header + '\n')
+    console.log(screen.join(''))
 
     a += 0.04
     b += 0.02
