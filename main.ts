@@ -35,12 +35,12 @@ while (true) {
             const d = 1 / (sinI * cosJ2 * sinA + sinJ * cosA + 5)
             const t = sinI * cosJ2 * cosA - sinJ * sinA
 
-            const x = Math.round(40 + 30 * d * (cosI * cosJ2 * cosB - t * sinB))
+            const x = Math.floor(40 + 30 * d * (cosI * cosJ2 * cosB - t * sinB))
 
-            const y = Math.round(12 + 15 * d * (cosI * cosJ2 * sinB + t * cosB))
+            const y = Math.floor(12 + 15 * d * (cosI * cosJ2 * sinB + t * cosB))
 
             const o = x + width * y
-            const N = Math.round(
+            const N = Math.floor(
                 8 *
                     ((sinJ * sinA - sinI * cosJ * cosA) * cosB -
                         sinI * cosJ * sinA -
